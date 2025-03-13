@@ -1,4 +1,4 @@
-package io.ylab.storage;
+package io.ylab.repository.imp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,13 +7,19 @@ import java.util.Map;
 
 import io.ylab.model.TransactionModel;
 import io.ylab.model.UserModel;
+import io.ylab.repository.AccountRepository;
 import io.ylab.repository.TransactionRepository;
+import io.ylab.util.TransactionType;
 
-public class TransactionStorage implements TransactionRepository {
+/**
+ * Реализация интерфейса {@link AccountRepository}.
+ * Реализует crud операции для транзакций пользователя.
+ */
+public class TransactionRepositoryImp implements TransactionRepository {
     private Map<UserModel, List<TransactionModel>> userTransactions;
 
-    public TransactionStorage() {
-        userTransactions = new HashMap<>();
+    public TransactionRepositoryImp() {
+        this.userTransactions = new HashMap<>();
     }
 
     @Override
@@ -25,15 +31,17 @@ public class TransactionStorage implements TransactionRepository {
     }
 
     @Override
-    public void save(UserModel user, TransactionModel transaction) {
-        if(!userTransactions.containsKey(user)) {
+    public void save(UserModel user, String category, String description, int amount, TransactionType type) {
+        TransactionModel transaction = new TransactionModel(category, description, amount, type);
+        if (!userTransactions.containsKey(user)) {
             userTransactions.put(user, new ArrayList<>());
         }
         userTransactions.get(user).add(transaction);
     }
 
     @Override
-    public void delete(UserModel user, TransactionModel transaction) {
+    public void delete(UserModel user, int id) {
+        TransactionModel transaction = get(user, id);
         userTransactions.get(user).remove(transaction);
     }
 

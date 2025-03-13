@@ -1,35 +1,38 @@
 package io.ylab.model;
 
+/**
+ * Сущность бюджета
+ */
 public class BudgetModel {
-    private double monthlyBudget;
-    private double income;
-    private double expense;
+    private int monthlyBudget;
+    private int income;
+    private int expense;
 
-    public BudgetModel(double monthlyBudget) {
+    public BudgetModel(int monthlyBudget) {
         this.monthlyBudget = monthlyBudget;
     }
 
-    public double getMonthlyBudget() {
+    public int getMonthlyBudget() {
         return monthlyBudget;
     }
 
-    public void setMonthlyBudget(double monthlyBudget) {
+    public void setMonthlyBudget(int monthlyBudget) {
         this.monthlyBudget = monthlyBudget;
     }
 
-    public double getIncome() {
+    public int getIncome() {
         return income;
     }
 
-    public void setIncome(double income) {
+    public void setIncome(int income) {
         this.income = income;
     }
 
-    public double getExpense() {
+    public int getExpense() {
         return expense;
     }
 
-    public void setExpense(double expense) {
+    public void setExpense(int expense) {
         this.expense = expense;
     }
 }

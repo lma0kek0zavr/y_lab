@@ -1,13 +1,16 @@
 package io.ylab.model;
 
+/**
+ * Сущность цели
+ */
 public class TargetModel {
     private int id;
-    private double target;
-    private double currentSavings;
+    private int target;
+    private int currentSavings;
 
     private static int targetId = 0;
 
-    public TargetModel(double amount) {
+    public TargetModel(int amount) {
         this.id = ++targetId;
         this.target = amount;
         this.currentSavings = 0;
@@ -17,19 +20,29 @@ public class TargetModel {
         return id;
     }
 
-    public double getTarget() {
+    public int getTarget() {
         return target;
     }
 
-    public void setTarget(double target) {
+    public void setTarget(int target) {
         this.target = target;
     }
 
-    public double getCurrentSavings() {
+    public int getCurrentSavings() {
         return currentSavings;
     }
 
-    public void setCurrentSavings(double currentSavings) {
+    public void setCurrentSavings(int currentSavings) {
         this.currentSavings = currentSavings;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", target=" + target +
+                ", currentSavings=" + currentSavings +
+                '}';
     }
 }

@@ -5,51 +5,69 @@ import java.util.List;
 
 import io.ylab.model.TransactionModel;
 import io.ylab.model.UserModel;
-import io.ylab.repository.TransactionRepository;
 import io.ylab.util.TransactionType;
 
-public class TransactionService {
-    private TransactionRepository transactionRepository;
+/**
+ * Интерфейс сервиса для работы с транзакциями пользователя
+ */
+public interface TransactionService {
+    /**
+     * Добавить новую транзакцию
+     * @param user пользователь
+     * @param category категория транзакции
+     * @param description описание транзакции
+     * @param amount сумма транзакции
+     * @param type тип транзакции
+     */
+    void createTransaction(UserModel user, String category, String description, int amount, TransactionType type);
 
-    public TransactionService(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
+    /**
+     * Обновить сумму транзакции пользователя
+     * @param user пользователь
+     * @param id id транзакции
+     * @param amount сумма транзакции
+     */
+    void updateTransactionAmount(UserModel user, int id, int amount);
 
-    public void createTransaction(UserModel user, TransactionModel transaction) {
-        transactionRepository.save(user, transaction);
-    }
+    /**
+     * Обновить категорию транзакции пользователя
+     * @param user пользователь
+     * @param id id транзакции
+     * @param category сумма транзакции
+     */
+    void updateTransactionCategory(UserModel user, int id, String category);
 
-    public void updateTransactionAmount(UserModel user, int id, double amount) {
-        TransactionModel transaction = transactionRepository.get(user, id);
-        transaction.setAmount(amount);
-        transactionRepository.update(user, transaction);
-    }
+    /**
+     * Обновить описание транзакции пользователя
+     * @param user пользователь
+     * @param id id транзакции
+     * @param description сумма транзакции
+     */
+    void updateTransactionDescription(UserModel user, int id, String description);
 
-    public void updateTransactionCategory(UserModel user, int id, String category) {
-        TransactionModel transaction = transactionRepository.get(user, id);
-        transaction.setCategory(category);
-        transactionRepository.update(user, transaction);
-    }
+    void deleteTransaction(UserModel user, int id);
 
-    public void updateTransactionDescription(UserModel user, int id, String description) {
-        TransactionModel transaction = transactionRepository.get(user, id);
-        transaction.setDescription(description);
-        transactionRepository.update(user, transaction);
-    }
+    /**
+     * Получить транзакции пользователя по дате
+     * @param user пользователь
+     * @param date дата
+     * @return {@code List<TransactionModel>}
+     */
+    List<TransactionModel> getTransactionsByDate(UserModel user, LocalDateTime date);
 
-    public void deleteTransaction(UserModel user, TransactionModel transaction) {
-        transactionRepository.delete(user, transaction);
-    }
+    /**
+     * Получить транзакции пользователя по категории
+     * @param user пользователь
+     * @param category категория
+     * @return {@code List<TransactionModel>}
+     */
+    List<TransactionModel> getTransactionsByCategory(UserModel user, String category);
 
-    public List<TransactionModel> getTransactionsByDate(UserModel user, LocalDateTime date) {
-        return transactionRepository.filterTransaction(user, t -> t.getDate().equals(date));
-    }
-
-    public List<TransactionModel> getTransactionsByCategory(UserModel user, String category) {
-        return transactionRepository.filterTransaction(user, t -> t.getCategory().equals(category));
-    }
-
-    public List<TransactionModel> getTransactionsByType(UserModel user, TransactionType type) {
-        return transactionRepository.filterTransaction(user, t -> t.getType().equals(type));
-    }
+    /**
+     * Получить транзакции пользователя по дате
+     * @param user пользователь
+     * @param type тип транзакции
+     * @return {@code List<TransactionModel>}
+     */
+    List<TransactionModel> getTransactionsByType(UserModel user, TransactionType type);
 }

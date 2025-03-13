@@ -1,25 +1,28 @@
 package io.ylab.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import io.ylab.util.TransactionType;
 
+/**
+ * Сущность транзакций
+ */
 public class TransactionModel {
     private int id;
     private String category;
     private String description;
-    private double amount;
-    private LocalDateTime time;
+    private int amount;
+    private LocalDate time;
     private TransactionType type;
 
     private static int transactionId = 0;
 
-    public TransactionModel(String category, String description, double amount, TransactionType type) {
+    public TransactionModel(String category, String description, int amount, TransactionType type) {
         this.id = ++transactionId;
         this.category = category;
         this.description = description;
         this.amount = amount;
-        this.time = LocalDateTime.now();
+        this.time = LocalDate.now();
         this.type = type;
     }
 
@@ -43,19 +46,19 @@ public class TransactionModel {
         this.description = description;
     }
 
-    public double getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return time;
     }
 
-    public void setDate(LocalDateTime time) {
+    public void setDate(LocalDate time) {
         this.time = time;
     }
 
@@ -65,5 +68,18 @@ public class TransactionModel {
 
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", amount=" + amount +
+                ", time=" + time +
+                ", type=" + type +
+                '}';
     }
 }

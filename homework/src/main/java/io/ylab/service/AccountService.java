@@ -3,50 +3,62 @@ package io.ylab.service;
 import java.util.List;
 
 import io.ylab.model.UserModel;
-import io.ylab.repository.AccountRepository;
 
-public class AccountService {
-    private AccountRepository accountRepository;
+/**
+ * Интерфейс сервиса для работы с пользователями
+ */
+public interface AccountService {
+    /**
+     * Создать нового пользователя
+     * @param name имя
+     * @param email почта
+     * @param password пароль
+     */
+    void createAccount(String name, String email, String password);
 
-    public AccountService(AccountRepository userRepository) {
-        this.accountRepository = userRepository;
-    }
+    /**
+     * Удалить пользователя по id
+     * @param id id пользователя
+     */
+    void deleteAccount(int id);
 
-    public UserModel getById(int id) {
-        return accountRepository.getById(id);
-    }
+    /**
+     * Обновить имя пользователя
+     * @param id id пользователя
+     * @param name новое имя
+     */
+    void updateUserName(int id, String name);
 
-    public void createAccount(String name, String email, String password) {
-        accountRepository.save(name, email, password);
-    }
+    /**
+     * Обновить пароль пользователя
+     * @param id id пользователя
+     * @param password новый пароль
+     */
+    void updatePassword(int id, String password);
 
-    public void deleteAccount(int id) {
-        accountRepository.delete(id);
-    }
+    /**
+     * Обновить почту пользователя
+     * @param id id пользователя
+     * @param email новая почта
+     */
+    void updateEmail(int id, String email);
 
-    public void updateUserName(int id, String name) {
-        UserModel user = accountRepository.getById(id);
-        user.setName(name);
-        accountRepository.update(id, user);
-    }
+    /**
+     * Заблокировать пользователя
+     * @param id id пользователя
+     */
+    void blockAccount(int id);
 
-    public void updatePassword(int id, String password) {
-        UserModel user = accountRepository.getById(id);
-        user.setPassword(password);
-        accountRepository.update(id, user);
-    }
+    /**
+     * Получить всех пользователей
+     * @return {@code List<UserModel>}
+     */
+    List<UserModel> getAllAccounts();
 
-    public void updateEmail(int id, String email) {
-        UserModel user = accountRepository.getById(id);
-        user.setEmail(email);
-        accountRepository.update(id, user);
-    }
-
-    public void blockAccount(int id) {
-        accountRepository.blockUser(id);
-    }
-
-    public List<UserModel> getAllAccounts() {
-        return accountRepository.getAll();
-    }
+    /**
+     * Получить пользователя по id
+     * @param id id пользователя
+     * @return {@code UserModel}
+     */
+    UserModel getAccountById(int id);
 }
